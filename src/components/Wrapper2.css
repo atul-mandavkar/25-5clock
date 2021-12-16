@@ -1,0 +1,8 @@
+.wrapper2{
+  width: 100%;
+  height: 70%;
+  border: 1px solid;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+}
