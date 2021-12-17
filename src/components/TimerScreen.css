@@ -1,0 +1,8 @@
+.timerScreen{
+  flex: 3;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  border: 3px dashed yellowgreen;
+  border-radius: 20%;
+}

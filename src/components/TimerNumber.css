@@ -1,0 +1,8 @@
+.timerNumber{
+  flex: 1;
+  color: white;
+  font-size: 450%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
