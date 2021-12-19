@@ -6,3 +6,13 @@
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(1, 1fr);
 }
+
+@media screen and (max-device-width: 600px) {
+  .wrapper2{
+    width: 100vw;
+    height: 70vh;
+    display: flex;
+    flex-direction: row;
+    flex-basis: 33.33%;
+  }
+}

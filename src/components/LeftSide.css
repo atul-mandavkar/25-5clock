@@ -7,3 +7,9 @@
   align-items: center;
   justify-content: center;
 }
+
+@media screen and (max-device-width: 600px) {
+ .leftSide{
+   background-color: red;
+ } 
+}
