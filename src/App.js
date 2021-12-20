@@ -16,14 +16,25 @@ import ButtonPause from "./components/ButtonPause";
 import ButtonReset from "./components/ButtonReset";
 import React, {useState} from "react";
 
-const d = new Date();
+const zeroTo59 = (arg1) => {
+  if(Number(arg1) === 0){
+   return "59"; 
+  }
+  return arg1;
+};
+const lessThan10 = (arg1) => {
+  if(Number(arg1) <= 10){
+    return ("0" + String(arg1));
+  }
+};
 
 function App() {
   
   let [tValue, setTValue] = useState({
     sessionT: 25,
     breakT: 5,
-    timeVal: "25:00"
+    timeVal: "25:00",
+    timeHeading: "SESSION"
   });
   const incSession = () => {
     setTValue({
@@ -31,7 +42,13 @@ function App() {
       sessionT:
         tValue.sessionT === 59
         ? 0
-        : Number(tValue.sessionT)+1
+        : Number(tValue.sessionT)+1,
+      timeVal:
+        tValue.sessionT === 59
+        ? "00:00" /* To put 00:00 after 59:00 */
+        : tValue.sessionT < 9
+        ? "0" + String(tValue.sessionT+1)+":00"
+        : String(tValue.sessionT+1)+":00"
     });
   };
   const decSession = () => {
@@ -40,7 +57,13 @@ function App() {
       sessionT:
         tValue.sessionT === 0
         ? 59
-        : Number(tValue.sessionT)-1
+        : Number(tValue.sessionT)-1,
+      timeVal:
+        tValue.sessionT === 0
+        ? "59:00" /* To put 59:00 after 00:00 */
+        : tValue.sessionT <= 10
+        ? "0" + String(tValue.sessionT-1)+":00"
+        : String(tValue.sessionT-1)+":00"
     });
   };
   const incBreak = () => {
@@ -59,6 +82,17 @@ function App() {
       });
     }
   };
+  const startClock = () => {
+    let arr1 = tValue.timeVal.split(":");
+    let minVal = Number(arr1[0]);
+    let secVal = Number(arr1[1]);
+    console.log(minVal);
+    console.log(secVal);
+    do{
+      secVal--;
+      console.log(secVal);
+    }while(minVal !== 0);
+  };
 
   return (
     <Wrapper>
@@ -72,11 +106,11 @@ function App() {
         <MiddleSide>
           <TimerClock>
             <TimerScreen>
-              <TimerHeading value="session"></TimerHeading>
+              <TimerHeading value={tValue.timeHeading}></TimerHeading>
               <TimerNumber value={tValue.timeVal}></TimerNumber>
             </TimerScreen>
             <TimerButton>
-              <ButtonPlay></ButtonPlay>
+              <ButtonPlay onClick={startClock}></ButtonPlay>
               <ButtonPause></ButtonPause>
               <ButtonReset></ButtonReset>
             </TimerButton>

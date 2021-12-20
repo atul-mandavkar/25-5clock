@@ -3,8 +3,8 @@ import "./ButtonPlay.css";
 
 
 
-const ButtonPlay = () => {
-  return <i className="buttonPlay fas fa-play"></i>
+const ButtonPlay = ({onClick}) => {
+  return <i className="buttonPlay fas fa-play" onClick={onClick}></i>
 };
 
 
