@@ -16,16 +16,18 @@ import ButtonPause from "./components/ButtonPause";
 import ButtonReset from "./components/ButtonReset";
 import React, {useState} from "react";
 
+
 const zeroTo59 = (arg1) => {
-  if(Number(arg1) === 0){
+  if(Number(arg1) === -1){
    return "59"; 
   }
   return arg1;
 };
 const lessThan10 = (arg1) => {
-  if(Number(arg1) <= 10){
+  if(Number(arg1) < 10){
     return ("0" + String(arg1));
   }
+  return arg1;
 };
 
 function App() {
@@ -37,34 +39,28 @@ function App() {
     timeHeading: "SESSION"
   });
   const incSession = () => {
-    setTValue({
-      ...tValue,
-      sessionT:
-        tValue.sessionT === 59
-        ? 0
-        : Number(tValue.sessionT)+1,
-      timeVal:
-        tValue.sessionT === 59
-        ? "00:00" /* To put 00:00 after 59:00 */
-        : tValue.sessionT < 9
-        ? "0" + String(tValue.sessionT+1)+":00"
-        : String(tValue.sessionT+1)+":00"
-    });
+    if(tValue.sessionT < 60){
+      setTValue({
+        ...tValue,
+        sessionT: Number(tValue.sessionT)+1,
+        timeVal:
+          tValue.sessionT < 9
+          ? "0" + String(tValue.sessionT+1)+":00"
+          : String(tValue.sessionT+1)+":00"
+      });
+    }
   };
   const decSession = () => {
-    setTValue({
-      ...tValue,
-      sessionT:
-        tValue.sessionT === 0
-        ? 59
-        : Number(tValue.sessionT)-1,
-      timeVal:
-        tValue.sessionT === 0
-        ? "59:00" /* To put 59:00 after 00:00 */
-        : tValue.sessionT <= 10
-        ? "0" + String(tValue.sessionT-1)+":00"
-        : String(tValue.sessionT-1)+":00"
-    });
+    if(tValue.sessionT > 1){
+      setTValue({
+        ...tValue,
+        sessionT: Number(tValue.sessionT)-1,
+        timeVal:
+          tValue.sessionT <= 10
+          ? "0" + String(tValue.sessionT-1)+":00"
+          : String(tValue.sessionT-1)+":00"
+      });
+    }
   };
   const incBreak = () => {
     if(tValue.breakT < 60){
@@ -88,10 +84,27 @@ function App() {
     let secVal = Number(arr1[1]);
     console.log(minVal);
     console.log(secVal);
+    //console.log(lessThan10(minVal));
+    //console.log(zeroTo59(minVal));
+
+// Use setInterval , first different function with this do while method and then call it in set interval  In do while reduce sec to -1 and when sec is 0 then reduce minutes by -1    
     do{
-      secVal--;
-      console.log(secVal);
-    }while(minVal !== 0);
+      do{
+        //console.log("== "+ secVal);
+        secVal = Number(secVal - 1);
+        secVal = zeroTo59(secVal);
+        console.log(lessThan10(minVal)+":"+lessThan10(secVal));
+        setTValue({
+          ...tValue,
+          timeVal: lessThan10(minVal)+":"+lessThan10(secVal)
+        });
+      }while(secVal !== 0);
+      if(secVal === 0){
+        minVal = zeroTo59(Number(minVal - 1));
+        //console.log("minutes = "+minVal);
+        //console.log(minVal === "59");
+      }
+    }while(minVal !== "59");
   };
 
   return (
