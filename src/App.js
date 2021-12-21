@@ -29,14 +29,63 @@ const lessThan10 = (arg1) => {
   }
   return arg1;
 };
+const clockFunct = (arg1, arg2) => {
+  arg1 = Number(arg1);
+  arg2 = Number(arg2);
+  arg1 = zeroTo59(arg1);
+  arg2 = zeroTo59(arg2);
+  console.log("minutes "+ arg1);
+  console.log("seconds "+ arg2);
+  let interval1 = setInterval(()=>{
+    arg2--;
+    arg2 = zeroTo59(arg2);
+    if(arg2 === "59"){
+      //console.log("[]][][ " +arg2);
+      arg1--;
+    }
+    arg1 = zeroTo59(arg1);
+    if(Number(arg1) === 0){
+      document.querySelector(".timerNumber").style.color = "red";
+      document.querySelector(".timerHeading").style.color = "red";
+    }
+    document.getElementsByClassName("timerNumber")[0].innerHTML = lessThan10(String(arg1))+":"+lessThan10(String(arg2));
+    //console.log(arg1 + " "+typeof arg1+" "+arg2 + " "+typeof arg2);
+    
+    if(Number(arg1) === 0 && Number(arg2) === 0){
+      console.log("finished");
+      clearInterval(interval1);
+    }
+
+  }, 250);
+};
+/*
+do{
+      do{
+        //console.log("== "+ secVal);
+        secVal = Number(secVal - 1);
+        secVal = zeroTo59(secVal);
+        console.log(lessThan10(minVal)+":"+lessThan10(secVal));
+        setTValue({
+          ...tValue,
+          timeVal: lessThan10(minVal)+":"+lessThan10(secVal)
+        });
+      }while(secVal !== 0);
+      if(secVal === 0){
+        minVal = zeroTo59(Number(minVal - 1));
+        //console.log("minutes = "+minVal);
+        //console.log(minVal === "59");
+      }
+    }while(minVal !== "59");
+*/
 
 function App() {
   
   let [tValue, setTValue] = useState({
-    sessionT: 25,
+    sessionT: 1,
     breakT: 5,
-    timeVal: "25:00",
-    timeHeading: "SESSION"
+    timeVal: "01:00",
+    timeHeading: "SESSION",
+    chSession: true
   });
   const incSession = () => {
     if(tValue.sessionT < 60){
@@ -86,25 +135,16 @@ function App() {
     console.log(secVal);
     //console.log(lessThan10(minVal));
     //console.log(zeroTo59(minVal));
+    if(tValue.chSession){
+      clockFunct(minVal, secVal);
+      setTValue({
+        ...tValue,
+        chSession: !(tValue.chSession)
+      });
+    }
 
 // Use setInterval , first different function with this do while method and then call it in set interval  In do while reduce sec to -1 and when sec is 0 then reduce minutes by -1    
-    do{
-      do{
-        //console.log("== "+ secVal);
-        secVal = Number(secVal - 1);
-        secVal = zeroTo59(secVal);
-        console.log(lessThan10(minVal)+":"+lessThan10(secVal));
-        setTValue({
-          ...tValue,
-          timeVal: lessThan10(minVal)+":"+lessThan10(secVal)
-        });
-      }while(secVal !== 0);
-      if(secVal === 0){
-        minVal = zeroTo59(Number(minVal - 1));
-        //console.log("minutes = "+minVal);
-        //console.log(minVal === "59");
-      }
-    }while(minVal !== "59");
+    
   };
 
   return (
