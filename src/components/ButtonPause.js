@@ -3,8 +3,8 @@ import "./ButtonPause.css";
 
 
 
-const ButtonPause = () => {
-  return <i className="buttonPause fas fa-pause"></i>
+const ButtonPause = ({onClick}) => {
+  return <i className="buttonPause fas fa-pause" onClick={onClick}></i>
 };
 
 

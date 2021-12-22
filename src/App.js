@@ -29,35 +29,6 @@ const lessThan10 = (arg1) => {
   }
   return arg1;
 };
-const clockFunct = (arg1, arg2) => {
-  arg1 = Number(arg1);
-  arg2 = Number(arg2);
-  arg1 = zeroTo59(arg1);
-  arg2 = zeroTo59(arg2);
-  console.log("minutes "+ arg1);
-  console.log("seconds "+ arg2);
-  let interval1 = setInterval(()=>{
-    arg2--;
-    arg2 = zeroTo59(arg2);
-    if(arg2 === "59"){
-      //console.log("[]][][ " +arg2);
-      arg1--;
-    }
-    arg1 = zeroTo59(arg1);
-    if(Number(arg1) === 0){
-      document.querySelector(".timerNumber").style.color = "red";
-      document.querySelector(".timerHeading").style.color = "red";
-    }
-    document.getElementsByClassName("timerNumber")[0].innerHTML = lessThan10(String(arg1))+":"+lessThan10(String(arg2));
-    //console.log(arg1 + " "+typeof arg1+" "+arg2 + " "+typeof arg2);
-    
-    if(Number(arg1) === 0 && Number(arg2) === 0){
-      console.log("finished");
-      clearInterval(interval1);
-    }
-
-  }, 250);
-};
 /*
 do{
       do{
@@ -79,13 +50,14 @@ do{
 */
 
 function App() {
-  
+  let interval1, interval2, activeSide = 1;
   let [tValue, setTValue] = useState({
     sessionT: 1,
     breakT: 5,
     timeVal: "01:00",
     timeHeading: "SESSION",
-    chSession: true
+    tempTimeVal: "",
+    tempTimeHeading: ""
   });
   const incSession = () => {
     if(tValue.sessionT < 60){
@@ -128,24 +100,121 @@ function App() {
     }
   };
   const startClock = () => {
-    let arr1 = tValue.timeVal.split(":");
+    let x = document.getElementsByClassName("timerNumber")[0].innerHTML;
+    console.log("prev side " + activeSide);
+    console.log("x is "+x);
+    let arr1 = x.split(":");
     let minVal = Number(arr1[0]);
     let secVal = Number(arr1[1]);
     console.log(minVal);
     console.log(secVal);
     //console.log(lessThan10(minVal));
-    //console.log(zeroTo59(minVal));
-    if(tValue.chSession){
-      clockFunct(minVal, secVal);
-      setTValue({
-        ...tValue,
-        chSession: !(tValue.chSession)
-      });
-    }
+    //console.log(zeroTo59(minVal)); 
+    clockFunct(minVal, secVal);
+    document.getElementsByClassName("buttonPlay")[0].style.display = "none";
+    document.getElementsByClassName("buttonPause")[0].style.display = "block";
 
 // Use setInterval , first different function with this do while method and then call it in set interval  In do while reduce sec to -1 and when sec is 0 then reduce minutes by -1    
     
   };
+  
+const clockFunct = (arg1, arg2) => {
+  if(!activeSide){
+    breakFunct(arg1, arg2);
+  }
+  arg1 = Number(arg1);
+  arg2 = Number(arg2);
+  arg1 = zeroTo59(arg1);
+  arg2 = zeroTo59(arg2);
+  document.querySelector(".timerNumber").style.color = "white";
+  document.querySelector(".timerHeading").style.color = "white";
+  console.log("side is "+ activeSide);
+  console.log("minutes "+ arg1);
+  console.log("seconds "+ arg2);
+  interval1 = setInterval(()=>{
+    arg2--;
+    arg2 = zeroTo59(arg2);
+    if(arg2 === "59"){
+      //console.log("[]][][ " +arg2);
+      arg1--;
+    }
+    arg1 = zeroTo59(arg1);
+    if(Number(arg1) === 0){
+      document.querySelector(".timerNumber").style.color = "red";
+      document.querySelector(".timerHeading").style.color = "red";
+    }
+    document.getElementsByClassName("timerNumber")[0].innerHTML = lessThan10(String(arg1))+":"+lessThan10(String(arg2));
+    //console.log(arg1 + " "+typeof arg1+" "+arg2 + " "+typeof arg2);
+    
+    if(Number(arg1) === 0 && Number(arg2) === 0){
+      console.log("finished");
+      clearInterval(interval1);
+      activeSide = 0;
+      breakFunct(tValue.breakT, "00");
+      setTValue({
+        ...tValue,
+        timeHeading: "BREAK",
+        timeVal: tValue.breakT + ":00",
+        tempTimeVal: tValue.timeVal,
+        tempTimeHeading: tValue.timeHeading
+      });
+    }
+
+  }, 150);
+};
+const breakFunct = (arg1, arg2) => {
+  arg1 = Number(arg1);
+  arg2 = Number(arg2);
+  arg1 = zeroTo59(arg1);
+  arg2 = zeroTo59(arg2);
+  document.querySelector(".timerNumber").style.color = "white";
+  document.querySelector(".timerHeading").style.color = "white";
+  console.log("side is "+ activeSide);
+  console.log("Bminutes "+ arg1);
+  console.log("Bseconds "+ arg2);
+  interval2 = setInterval(()=>{
+    arg2--;
+    arg2 = zeroTo59(arg2);
+    if(arg2 === "59"){
+      //console.log("[]][][ " +arg2);
+      arg1--;
+    }
+    arg1 = zeroTo59(arg1);
+    if(Number(arg1) === 0){
+      document.querySelector(".timerNumber").style.color = "red";
+      document.querySelector(".timerHeading").style.color = "red";
+    }
+    document.getElementsByClassName("timerNumber")[0].innerHTML = lessThan10(String(arg1))+":"+lessThan10(String(arg2));
+    //console.log(arg1 + " "+typeof arg1+" "+arg2 + " "+typeof arg2);
+    
+    if(Number(arg1) === 0 && Number(arg2) === 0){
+      console.log("finishedB");
+      clearInterval(interval2);
+      activeSide = 1;
+      let arr1 = tValue.timeVal.split(":");
+      clockFunct(arr1[0], arr1[1]);
+      setTValue({
+        ...tValue,
+        tempTimeHeading: tValue.timeHeading,
+        tempTimeVal: tValue.timeVal
+      });
+    }
+
+  }, 150);
+};
+
+const pauseClock = () => {
+  console.log("a stop at side -- " + activeSide);
+  console.log("stop at " + document.getElementsByClassName("timerNumber")[0].innerHTML);
+  if(activeSide){
+    clearInterval(interval1);
+  }
+  else{
+    clearInterval(interval2);
+  }
+  document.getElementsByClassName("buttonPause")[0].style.display = "none";
+  document.getElementsByClassName("buttonPlay")[0].style.display = "block";
+};
 
   return (
     <Wrapper>
@@ -164,7 +233,7 @@ function App() {
             </TimerScreen>
             <TimerButton>
               <ButtonPlay onClick={startClock}></ButtonPlay>
-              <ButtonPause></ButtonPause>
+              <ButtonPause onClick={pauseClock}></ButtonPause>
               <ButtonReset></ButtonReset>
             </TimerButton>
           </TimerClock>
