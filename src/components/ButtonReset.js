@@ -3,8 +3,8 @@ import "./ButtonReset.css";
 
 
 
-const ButtonReset = () => {
-  return <i className="buttonReset fas fa-sync"></i>
+const ButtonReset = ({onClick}) => {
+  return <i className="buttonReset fas fa-sync" onClick={onClick}></i>
 };
 
 
