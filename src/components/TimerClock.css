@@ -4,6 +4,9 @@
   display: flex;
   flex-direction: column;
 }
-.audioPlay{
-  display: inline;
+
+@media screen and (max-device-width: 600px) {
+  .timerClock{
+    height: 50%;
+  } 
 }

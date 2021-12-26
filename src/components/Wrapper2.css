@@ -9,10 +9,8 @@
 
 @media screen and (max-device-width: 600px) {
   .wrapper2{
-    width: 100vw;
-    height: 70vh;
     display: flex;
-    flex-direction: row;
-    flex-basis: 33.33%;
+    flex-direction: column;
+    margin-top: 0%;
   }
 }

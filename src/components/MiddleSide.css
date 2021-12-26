@@ -10,6 +10,7 @@
 
 @media screen and (max-device-width: 600px) {
   .middleSide{
-    background-color: green;
+    flex: 2;
+    order: 3;
   }
 }

@@ -5,4 +5,11 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
+  font-family: Digital;
 }
+
+@media screen and (max-device-width: 600px) {
+  .timerNumber{
+    font-size: 350%;
+  }
+} 

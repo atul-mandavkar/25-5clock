@@ -11,6 +11,8 @@
 
 @media screen and (max-device-width: 600px) {
   .rightSide{
-    background-color: pink;
+    flex: 1;
+    height: 5%;
+    order: 2;
   }
 }

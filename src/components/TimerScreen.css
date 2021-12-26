@@ -6,3 +6,11 @@
   border: 3px dashed yellowgreen;
   border-radius: 20%;
 }
+
+@media screen and (max-device-width: 600px) {
+  .timerScreen{
+    border: 2px dashed yellowgreen;
+    margin-top: -5%;
+    margin-bottom: 5%;
+  }
+}

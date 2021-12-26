@@ -10,3 +10,9 @@ i{
 .fa-arrow-up{
   margin-left: 20px;
 }
+
+@media screen and (max-device-width: 600px) {
+  i{
+    font-size: 100%;
+  }
+}

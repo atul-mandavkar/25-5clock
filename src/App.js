@@ -171,22 +171,25 @@ const clockFunct = (arg1, arg2, arg3, arg4) => {
       clearInterval(window.interval1);
       if(heading === "SESSION"){
         document.getElementsByClassName("timerHeading")[0].innerHTML= "BREAK";
+        document.getElementById("audioPlay").play();
         //console.log("break");
       }
       else{
         document.getElementsByClassName("timerHeading")[0].innerHTML= "SESSION";
+        document.getElementById("audioPlay2").play();
         //console.log("session");
       }
       //console.log("values are "+ mArg3 + " "+ mArg4 + " " +mArg1+" " + mArg2);
       // this is remaining
-      document.getElementsByClassName("audioPlay")[0].play();
       clockFunct(String(mArg3), String(mArg4), String(mArg1), String(mArg2));
     }
 
-  },50);
+  }, 100);
 };
 const pauseClock = () => {
   clearInterval(window.interval1);
+  document.getElementById("audioPlay").pause();
+  document.getElementById("audioPlay2").pause();
   let capt1 = document.getElementsByClassName("timerHeading")[0].innerHTML;
   let capt2 = document.getElementsByClassName("timerNumber")[0].innerHTML;
   setTValue({
@@ -234,6 +237,8 @@ const resetClock = () => {
               <ButtonPlay onClick={startClock}></ButtonPlay>
               <ButtonPause onClick={pauseClock}></ButtonPause>
               <ButtonReset onClick={resetClock}></ButtonReset>
+              <audio id="audioPlay" src="http://www.ufoseries.com/soundEffects/hqAlarmBell.mp3"></audio>
+              <audio id="audioPlay2" src="http://mrclan.com/fastdl/tfc/sound/beacon.wav"></audio>
             </TimerButton>
           </TimerClock>
         </MiddleSide>
