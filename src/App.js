@@ -184,7 +184,7 @@ const clockFunct = (arg1, arg2, arg3, arg4) => {
       clockFunct(String(mArg3), String(mArg4), String(mArg1), String(mArg2));
     }
 
-  }, 100);
+  }, 1000);
 };
 const pauseClock = () => {
   clearInterval(window.interval1);
